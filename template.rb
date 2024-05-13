@@ -10,11 +10,11 @@ def add_template_repository_to_source_path
     at_exit { FileUtils.remove_entry(tempdir) }
     git clone: [
       '--quiet',
-      'https://github.com/IsraelDCastro/rails-vite-tailwindcss-template.git',
+      'https://github.com/IsraelDCastro/rails-api-template.git',
       tempdir
     ].map(&:shellescape).join(' ')
 
-    if (branch = __FILE__[%r{rails-vite-tailwindcss-template/(.+)/template.rb}, 1])
+    if (branch = __FILE__[%r{https://github.com/IsraelDCastro/rails-api-template/(.+)/template.rb}, 1])
       Dir.chdir(tempdir) { git checkout: branch }
     end
   else
@@ -81,26 +81,28 @@ after_bundle do
 
   copy_templates
 
-  # run_command_flags
+  run_command_flags
 
   rails_command 'db:create'
 
   rails_command 'generate model User first_name last_name email:uniq password_digest reset_password_token username:uniq'
 
-  rails_command 'active_storage:install'
-  rails_command 'g annotate:install'
+
   inject_into_file('app/controllers/application_controller.rb', "\n\n" '  def set_current_user
     # finds user with session data and stores it if present
     Current.user = User.find_by(id: session[:user_id]) if session[:user_id]
-  end' "\n\n", after: 'class ApplicationController < ActionController::Base')
+  end' "\n", after: 'class ApplicationController < ActionController::Base')
+
+  inject_into_file('config/application.rb', "\n\n" '    config.active_storage.variant_processor = :vips', after: 'config.load_defaults 7.0')
+  inject_into_file('config/application.rb', "\n\n" '    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore', after: 'config.api_only = true')
 
   inject_into_file('app/models/user.rb', "\n\n" '  has_secure_password
         validates :username, uniqueness: true
         validates :email, presence: true, uniqueness: true
       ', after: ':validatable')
-  inject_into_file('config/application.rb', "\n\n" '    config.active_storage.variant_processor = :vips', after: 'config.load_defaults 7.0')
-  inject_into_file('config/application.rb', "\n\n" '    config.middleware.use ActionDispatch::Cookies
-  config.middleware.use ActionDispatch::Session::CookieStore', after: 'config.api_only = true')
+  rails_command 'active_storage:install'
+  rails_command 'g annotate:install'
   rails_command 'db:migrate'
 
   begin
