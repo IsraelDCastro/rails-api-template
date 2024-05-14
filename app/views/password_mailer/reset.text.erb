@@ -1,0 +1,4 @@
+Hi <%= params[:user].email %>
+Someone requested a password reset.
+Click the link above if you recognise the activity, link expires in 15 minutes
+<a href="<%= ENV['FRONTEND_WEBSITE_URL'] %>/reset-password?token=<%= @token %>" target="_blank">Reset Password</a>

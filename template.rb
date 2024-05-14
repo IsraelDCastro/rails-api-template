@@ -39,18 +39,16 @@ def set_application_name
   puts 'You can change application name inside: ./config/application.rb'
 end
 
-def add_javascript_vue
-  run 'yarn add autoprefixer postcss sass tailwindcss vite vue'
-  run 'yarn add -D @vitejs/plugin-vue @vue/compiler-sfc eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-plugin-vue path vite-plugin-full-reload vite-plugin-ruby'
+def add_vue
+  directory 'vue-front', force: true
 end
 
-def add_javascript_react
-  run 'yarn add autoprefixer postcss sass tailwindcss vite react react-dom'
-  run 'yarn add -D @vitejs/plugin-react-refresh eslint prettier eslint-plugin-prettier eslint-config-prettier eslint-plugin-react path vite-plugin-full-reload vite-plugin-ruby'
+def add_react
+    directory 'react-front', force: true
 end
 
 def copy_templates
-  # directory 'app', force: true
+  directory 'app', force: true
   directory 'config', force: true
   directory 'lib', force: true
 
@@ -60,15 +58,9 @@ end
 
 def run_command_flags
   ARGV.each do |flag|
-    copy_file 'vite.config-react.ts', 'vite.config.ts' if flag == '--react'
-    copy_file '.eslintrc-react.json', '.eslintrc.json' if flag == '--react'
-    directory 'app-react', 'app', force: true if flag == '--react'
-    add_javascript_react if flag == '--react'
+    add_react if flag == '--react'
 
-    copy_file 'vite.config-vue.ts', 'vite.config.ts' if flag == '--vue'
-    copy_file '.eslintrc-vue.json', '.eslintrc.json' if flag == '--vue'
-    directory 'app-vue', 'app', force: true if flag == '--vue'
-    add_javascript_vue if flag == '--vue'
+    add_vue if flag == '--vue'
   end
 end
 
@@ -87,11 +79,13 @@ after_bundle do
 
   rails_command 'generate model User first_name last_name email:uniq password_digest reset_password_token username:uniq'
 
+  rails_command 'active_storage:install'
+  rails_command 'g annotate:install'
 
   inject_into_file('app/controllers/application_controller.rb', "\n\n" '  def set_current_user
     # finds user with session data and stores it if present
     Current.user = User.find_by(id: session[:user_id]) if session[:user_id]
-  end' "\n", after: 'class ApplicationController < ActionController::Base')
+  end' "\n", after: 'class ApplicationController < ActionController::API')
 
   inject_into_file('config/application.rb', "\n\n" '    config.active_storage.variant_processor = :vips', after: 'config.load_defaults 7.0')
   inject_into_file('config/application.rb', "\n\n" '    config.middleware.use ActionDispatch::Cookies
@@ -99,10 +93,8 @@ after_bundle do
 
   inject_into_file('app/models/user.rb', "\n\n" '  has_secure_password
         validates :username, uniqueness: true
-        validates :email, presence: true, uniqueness: true
-      ', after: ':validatable')
-  rails_command 'active_storage:install'
-  rails_command 'g annotate:install'
+        validates :email, presence: true, uniqueness: true', after: 'class User < ApplicationRecord')
+
   rails_command 'db:migrate'
 
   begin
@@ -115,15 +107,15 @@ after_bundle do
   say
 
   ARGV.each do |flag|
-    say 'Rails 7 + Vue 3 + ViteJS + Tailwindcss created!', :green if flag == '--vue'
-    say 'Rails 7 + ReactJS 18 + ViteJS + Tailwindcss created!', :green if flag == '--react'
-    say 'Rails 7 + ViteJS + Tailwindcss created!', :green if flag == '--normal'
-    say 'Hotwired + Stimulus were added successfully', :green if flag == '--hotwired'
+    say 'Rails API + VueJS 3 + ViteJS + Tailwindcss + PrimeVue created!', :green if flag == '--vue'
+    say 'Rails API + ReactJS 18 + ViteJS + Tailwindcss + NextUI created!', :green if flag == '--react'
   end
 
   say
   say '  To get started with your new app:', :yellow
   say "  cd #{original_app_name}"
+  say "  cd #{original_app_name}/modules/vue-front"  if flag == '--vue'
+  say "  cd #{original_app_name}/modules/react-front"  if flag == '--react'
   say
   say '  # Please update config/database.yml with your database credentials'
   say

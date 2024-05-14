@@ -6,3 +6,8 @@ app/.DS_Store
 app/frontend/.DS_Store
 app/views/.DS_Store
 app/assets/.DS_Store
+
+
+vue-front/node_modules
+vue-front/.vscode
+vue-front/.DS_Store
