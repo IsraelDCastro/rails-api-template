@@ -40,11 +40,11 @@ def set_application_name
 end
 
 def add_vue
-  directory 'vue-front', force: true
+  directory 'modules/vue-front', force: true
 end
 
 def add_react
-    directory 'react-front', force: true
+  directory 'modules/react-front', force: true
 end
 
 def copy_templates

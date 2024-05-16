@@ -1,8 +1,22 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "sourceMap": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"],
+      "@/components/*": ["src/components/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/views/*": ["src/views/*"],
+      "@/routes/*": ["src/routes/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/store/*": ["src/store/*"]
     }
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*", "src/components/**/*", "src/lib/**/*", "src/views/**/*", "src/assets/**/*", "src/routes/**/*", "src/store/**/*"],
+  "exclude": ["**/dist", "**/node_modules", "**/test", "node_modules", "dist", "test"]
 }
