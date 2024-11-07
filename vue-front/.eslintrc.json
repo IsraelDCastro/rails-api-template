@@ -4,15 +4,15 @@
     "es2021": true
   },
   "extends": [
-    "plugin:vue/essential",
     "eslint:recommended",
+    "plugin:vue/essential",
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["vue", "prettier"],
+  "plugins": ["vue"],
   "rules": {
     "vue/multi-word-component-names": 0,
     "no-var": "error",
@@ -21,36 +21,6 @@
     "prefer-const": "error",
     "vue/html-indent": ["error", 2],
     "vue/no-side-effects-in-computed-properties": 0,
-    "no-undef": "off",
-    "vue/script-indent": [
-      "error",
-      "tab",
-      {
-        "baseIndent": 2,
-        "switchCase": 2
-      }
-    ],
-    "vue/style-indent": [
-      "error",
-      "tab",
-      {
-        "baseIndent": 2,
-        "switchCase": 2
-      }
-    ],
-    "vueIndentScriptAndStyle": true,
-    "prettier/prettier": [
-      2,
-      {
-        "bracketSpacing": true,
-        "printWidth": 120,
-        "singleQuote": false,
-        "semi": true,
-        "trailingComma": "none",
-        "tabWidth": 2,
-        "useTabs": false,
-        "endOfLine": "auto"
-      }
-    ]
+    "no-undef": "off"
   }
 }

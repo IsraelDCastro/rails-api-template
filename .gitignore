@@ -1,3 +1,4 @@
+.zed
 .idea
 .vscode
 .DS_Store
@@ -9,5 +10,15 @@ app/assets/.DS_Store
 
 
 vue-front/node_modules
+vue-front/src/presets
+vue-front/src/presets/aura
 vue-front/.vscode
+vue-front/.zed
+vue-front/.idea
 vue-front/.DS_Store
+
+react-front/node_modules
+react-front/.DS_Store
+react-front/.vscode
+react-front/.zed
+react-front/.idea
