@@ -1,12 +1,17 @@
 import { createApp } from "vue";
-import "./style.css";
 import App from "./App.vue";
-import PrimeVue from "primevue/config";
-import "primevue/resources/themes/aura-light-green/theme.css";
-import Button from "primevue/button";
+import router from "./routes";
+import { createPinia } from "pinia";
+import configurePrimeVue from "./primevue";
+
+import "./assets/main.css";
 
 const app = createApp(App);
+const pinia = createPinia();
 
-app.use(PrimeVue);
-app.component("Button", Button);
+app.use(router);
+app.use(pinia);
+
+configurePrimeVue(app);
+
 app.mount("#app");

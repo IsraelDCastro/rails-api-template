@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply font-body text-slate-700 text-base bg-gray-50;
+}
+
+h1 {
+  font-size: 2.75em;
+}
+
+h2 {
+  font-size: 2.25em;
+}
+
+h3 {
+  font-size: 2em;
+}
+
+h4 {
+  font-size: 1.625em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+h6 {
+  font-size: 1.125em;
+}
+
+p {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+a,
+label {
+  @apply font-sans;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply leading-tight;
+}
+
+h1,
+h2,
+h3 {
+  @apply font-bold;
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.875em;
+  }
+
+  h3 {
+    font-size: 1.75em;
+  }
+
+  h4 {
+    font-size: 1.5em;
+  }
+
+  h5 {
+    font-size: 1.375em;
+  }
+}
+
+img,
+svg {
+  @apply w-full h-auto;
+}
+
+main {
+  @apply flex flex-col min-h-screen;
+}
+
+.wrapper {
+  @apply flex-1 relative overflow-y-auto scroll-smooth;
+}
+
+.container {
+  @apply w-11/12 mx-auto;
+}
