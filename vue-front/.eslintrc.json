@@ -1,26 +1,53 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:vue/essential",
-    "plugin:prettier/recommended"
-  ],
-  "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": ["vue"],
-  "rules": {
-    "vue/multi-word-component-names": 0,
-    "no-var": "error",
-    "indent": ["error", 2],
-    "no-multi-spaces": "error",
-    "prefer-const": "error",
-    "vue/html-indent": ["error", 2],
-    "vue/no-side-effects-in-computed-properties": 0,
-    "no-undef": "off"
-  }
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:vue/essential",
+		"plugin:prettier/recommended"
+	],
+	"parserOptions": {
+		"ecmaVersion": 12,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"vue"
+	],
+	"rules": {
+		"vue/script-indent": [
+			"error",
+			4,
+			{
+				"baseIndent": 1,
+				"switchCase": 1,
+				"ignores": []
+			}
+		],
+		"vue/multi-word-component-names": 0,
+		"no-var": "error",
+		"indent": [
+			"error",
+			2
+		],
+		"no-multi-spaces": "error",
+		"prefer-const": "error",
+		"vue/html-indent": [
+			"error",
+			2
+		],
+		"vue/no-side-effects-in-computed-properties": 0,
+		"no-undef": "off"
+	},
+	"overrides": [
+		{
+			"files": [
+				"*.vue"
+			],
+			"rules": {
+				"indent": "off"
+			}
+		}
+	]
 }

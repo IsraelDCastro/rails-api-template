@@ -24,7 +24,7 @@ end
 
 def add_gems
   gem 'ruby-vips', '~> 2.1', '>= 2.1.4'
-  gem "rack-cors"
+  gem 'rack-cors'
   gem 'jwt'
   gem 'bcrypt', '~> 3.1.18'
   gem 'annotate', group: :development
@@ -40,11 +40,11 @@ def set_application_name
 end
 
 def add_vue
-  directory 'modules/vue-front', force: true
+  directory 'vue-front', 'modules/vue-front', force: true
 end
 
 def add_react
-  directory 'modules/react-front', force: true
+  directory 'react-front', 'modules/react-front', force: true
 end
 
 def copy_templates
@@ -82,16 +82,17 @@ after_bundle do
   rails_command 'active_storage:install'
   rails_command 'g annotate:install'
 
-  inject_into_file('app/controllers/application_controller.rb', "\n\n" '  def set_current_user
+  inject_into_file('app/controllers/application_controller.rb', "\n\n" + '  def set_current_user
     # finds user with session data and stores it if present
     Current.user = User.find_by(id: session[:user_id]) if session[:user_id]
-  end' "\n", after: 'class ApplicationController < ActionController::API')
+  end' + "\n", after: 'class ApplicationController < ActionController::API')
 
-  inject_into_file('config/application.rb', "\n\n" '    config.active_storage.variant_processor = :vips', after: 'config.load_defaults 7.0')
-  inject_into_file('config/application.rb', "\n\n" '    config.middleware.use ActionDispatch::Cookies
+  inject_into_file('config/application.rb', "\n\n" + '    config.active_storage.variant_processor = :vips',
+                   after: 'config.load_defaults 7.0')
+  inject_into_file('config/application.rb', "\n\n" + '    config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore', after: 'config.api_only = true')
 
-  inject_into_file('app/models/user.rb', "\n\n" '  has_secure_password
+  inject_into_file('app/models/user.rb', "\n\n" + '  has_secure_password
         validates :username, uniqueness: true
         validates :email, presence: true, uniqueness: true', after: 'class User < ApplicationRecord')
 
@@ -109,13 +110,13 @@ after_bundle do
   ARGV.each do |flag|
     say 'Rails API + VueJS 3 + ViteJS + Tailwindcss + PrimeVue created!', :green if flag == '--vue'
     say 'Rails API + ReactJS 18 + ViteJS + Tailwindcss + NextUI created!', :green if flag == '--react'
+    say "  cd #{original_app_name}/modules/vue-front" if flag == '--vue'
+    say "  cd #{original_app_name}/modules/react-front" if flag == '--react'
   end
 
   say
   say '  To get started with your new app:', :yellow
   say "  cd #{original_app_name}"
-  say "  cd #{original_app_name}/modules/vue-front"  if flag == '--vue'
-  say "  cd #{original_app_name}/modules/react-front"  if flag == '--react'
   say
   say '  # Please update config/database.yml with your database credentials'
   say
