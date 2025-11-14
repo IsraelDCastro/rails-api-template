@@ -1,21 +1,21 @@
 <template>
-	<section class="flex justify-center section">
-		<form @submit.prevent class="flex flex-col w-full md:w-9/12 lg:w-5/12 form">
+	<section class="section flex justify-center">
+		<form @submit.prevent="sendRequestResetPassword" class="form flex w-full flex-col md:w-9/12 lg:w-5/12">
 			<h4 class="mb-2">Request reset password</h4>
-			<p class="mb-4 text-slate-600"> Add your email to receive instructions about how to reset your password. </p>
-			<FloatLabel variant="on">
-				<InputText id="email" type="email" name="email" ref="emailInput" v-model="email" class="input" required />
-				<label for="email">On Label</label>
-			</FloatLabel>
-			<div class="field field-button">
-				<button class="w-full button button-primary" @click="sendRequestResetPassword"> Request a reset password </button>
-			</div>
+			<p class="mb-4 text-slate-600">
+				Add your email to receive instructions about how to reset your password.
+			</p>
+			<InputUI id="email" v-model="email" type="email" name="email" label="Email" required />
+			<ButtonUI type="submit" color="primary" class="mt-4 w-full">
+				Request a reset password
+			</ButtonUI>
 		</form>
 	</section>
 </template>
 
-<script setup>
-import { onMounted, ref, computed } from "vue";
+<script setup lang="ts">
+import { ButtonUI, InputUI } from "simplekit-vue";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "@/store/user/userStore";
 import { Notification } from "@/lib";
 import { useRouter } from "vue-router";
@@ -25,7 +25,6 @@ const useRequestResetPasswordStore = useUserForgotPasswordStore();
 const router = useRouter();
 const userStore = useUserStore();
 const email = ref("");
-const emailInput = ref(null);
 
 function sendRequestResetPassword() {
 	useRequestResetPasswordStore.requestResetPassword(email.value);

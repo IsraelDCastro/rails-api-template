@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useEditUserPasswordStore } from "@/store/user/authStore";
 const passwordStore = useEditUserPasswordStore();

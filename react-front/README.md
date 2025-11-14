@@ -1,8 +1,13 @@
-# React + Vite
+## React + Vite + Simplekit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This module bootstraps React 19 with Vite, TypeScript, React Router, Tailwind CSS v4 (via `@tailwindcss/vite`) and the `simplekit-react`
+component library. Routing, lazy loading and linting are already wired together so you can focus on building features.
 
-Currently, two official plugins are available:
+### Useful scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `bun run dev` – start Vite in dev mode.
+- `bun run build` – type-check and build the production bundle.
+- `bun run typecheck` – run TypeScript without emitting files.
+- `bun run lint` – run ESLint with the shared config.
+
+Install deps with your preferred package manager (Bun is configured by default) before running any script.

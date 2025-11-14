@@ -11,7 +11,7 @@
     <Footer />
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
 import Navbar from "@/layouts/navbar.vue";
 import Footer from "@/layouts/footer.vue";
 </script>

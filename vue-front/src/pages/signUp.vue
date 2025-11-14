@@ -1,40 +1,31 @@
 <template>
 	<section class="flex justify-center py-8">
-		<form @submit.prevent class="flex flex-col w-full md:w-9/12 lg:w-5/12">
-			<h1 class="mb-8 text-2xl">Sign Up.</h1>
+		<form @submit.prevent="createAnAccount" class="flex w-full flex-col space-y-6 md:w-9/12 lg:w-5/12">
+			<h1 class="text-2xl">Sign Up.</h1>
 
-			<FloatLabel variant="on" class="mb-6">
-				<InputText id="name" type="text" v-model="name" class="w-full" required placeholder=" " />
-				<label for="name">Name</label>
-			</FloatLabel>
+			<InputUI id="name" v-model="name" type="text" label="Name" required />
+			<InputUI id="last_name" v-model="last_name" type="text" label="Last name" required />
+			<InputUI id="username" v-model="username" type="text" label="Username" required />
+				<InputUI
+					id="email"
+					v-model="email"
+					type="email"
+					label="Email"
+					required
+					:error-message="email.length > 0 && !isValidEmail ? 'Ingresa un correo válido' : ''"
+				/>
+				<PasswordInput id="password" v-model="password" label="Password" required description="Mínimo 6 caracteres" />
+				<PasswordInput
+					id="confirm_password"
+					v-model="confirm_password"
+					label="Confirm password"
+					required
+					:error-message="confirm_password.length > 0 && !passwordsMatch ? 'Las contraseñas no coinciden' : ''"
+				/>
 
-			<FloatLabel variant="on" class="mb-6">
-				<InputText id="last_name" type="text" v-model="last_name" class="w-full" required placeholder=" " />
-				<label for="last_name">Last name</label>
-			</FloatLabel>
-
-			<FloatLabel variant="on" class="mb-6">
-				<InputText id="username" type="text" v-model="username" class="w-full" required placeholder=" " />
-				<label for="username">Username</label>
-			</FloatLabel>
-
-			<FloatLabel variant="on" class="mb-6">
-				<InputText id="email" type="email" v-model="email" ref="emailInput" class="w-full" required placeholder=" " />
-				<label for="email">Email</label>
-			</FloatLabel>
-
-			<FloatLabel variant="on" class="mb-6">
-				<InputText id="password" type="password" v-model="password" class="w-full" required placeholder=" " />
-				<label for="password">Password</label>
-			</FloatLabel>
-
-			<FloatLabel variant="on" class="mb-6">
-				<InputText id="confirm_password" type="password" v-model="confirm_password" class="w-full" required
-					placeholder=" " />
-				<label for="confirm_password">Confirm password</label>
-			</FloatLabel>
-
-			<Button label="Sign up" @click="createAnAccount" />
+			<ButtonUI type="submit" color="primary" class="w-full" :is-disabled="!canSubmit">
+				Sign up
+			</ButtonUI>
 
 			<hr class="my-4" />
 
@@ -43,9 +34,12 @@
 	</section>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ButtonUI, InputUI, PasswordInput } from "simplekit-vue";
+import { computed, ref } from "vue";
 import { useSignUpStore } from "@/store/user/authStore";
+import { useSeo } from "@/composable/useSeo";
+
 const signUpStore = useSignUpStore();
 
 const name = ref("");
@@ -55,10 +49,28 @@ const username = ref("");
 const password = ref("");
 const confirm_password = ref("");
 
-const validate_email = ref(false);
-const emailInput = ref(null);
+const isValidEmail = computed(() => /\S+@\S+\.\S+/.test(email.value));
+const passwordsMatch = computed(() => password.value.length >= 6 && password.value === confirm_password.value);
+const canSubmit = computed(() => name.value !== "" && username.value !== "" && isValidEmail.value && passwordsMatch.value);
+
+useSeo({
+	title: "Crear cuenta",
+	description: "Regístrate para sincronizar tu panel Vue Simplekit con el backend Rails.",
+	canonical: "https://example.com/sign-up",
+	jsonLd: [
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			itemListElement: [
+				{ "@type": "ListItem", position: 1, name: "Inicio", item: "https://example.com/" },
+				{ "@type": "ListItem", position: 2, name: "Registro" },
+			],
+		},
+	],
+});
 
 function createAnAccount() {
+	if (!canSubmit.value) return;
 	signUpStore.signUp(name.value, last_name.value, username.value, email.value, password.value, confirm_password.value);
 }
 </script>

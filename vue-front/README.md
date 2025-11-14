@@ -1,7 +1,12 @@
-# Vue 3 + Vite
+## Vue 3 + Vite + Simplekit
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This module ships with Vue 3, TypeScript, Vite, Vue Router, Pinia, Tailwind CSS v4 and the `simplekit-vue` component kit already wired
+together. Toasts, API helpers and auth stores are pre-configured so the frontend is ready to consume the Rails API instantly.
 
-## Recommended IDE Setup
+### Useful scripts
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+- `bun run dev` – start Vite in dev mode.
+- `bun run build` – run `vue-tsc --noEmit` and build the production bundle.
+- `bun run typecheck` – run `vue-tsc` without emitting files.
+
+Install dependencies with Bun (or your preferred package manager) before running any script.

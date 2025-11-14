@@ -41,7 +41,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { useDeleteUserStore, useEditUserStore } from "@/store/user/authStore";
   import { onMounted, ref } from "vue";
   import { useUserStore } from "@/store/user/userStore";

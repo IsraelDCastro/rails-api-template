@@ -108,8 +108,8 @@ after_bundle do
   say
 
   ARGV.each do |flag|
-    say 'Rails API + VueJS 3 + ViteJS + Tailwindcss + PrimeVue created!', :green if flag == '--vue'
-    say 'Rails API + ReactJS 18 + ViteJS + Tailwindcss + NextUI created!', :green if flag == '--react'
+    say 'Rails API + VueJS 3 + ViteJS + Tailwindcss + Simplekit Vue created!', :green if flag == '--vue'
+    say 'Rails API + ReactJS 18 + ViteJS + Tailwindcss + Simplekit React created!', :green if flag == '--react'
     say "  cd #{original_app_name}/modules/vue-front" if flag == '--vue'
     say "  cd #{original_app_name}/modules/react-front" if flag == '--react'
   end
